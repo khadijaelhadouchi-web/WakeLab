@@ -1,210 +1,132 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>WakeLab</title>
-    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="bg-slate-100 text-slate-800 min-h-screen">
+<body class="bg-[#F6F5F0]">
+    <header class="border flex ">
+        <a href="" class="">
+            <span>
+                <i class="fa-solid fa-book "></i>
 
-    <!-- ===== EN-TÊTE ===== -->
-    <header class="bg-white border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-indigo-600">WakeLab</h1>
-                <p class="text-sm text-slate-500">Les idées de réveil pédagogique</p>
-            </div>
+            </span>
+            Book <span>Swap</span>
+        </a>
+        <nav>
 
-            <!-- Nom enregistré (JS : retirer "hidden" quand un nom existe) -->
-            <div id="user-info" class="flex items-center gap-3 text-sm">
-                <span>Connecté : <strong id="user-name">Prénom Nom</strong></span>
-                <button id="edit-name-btn" class="text-indigo-600 underline hover:text-indigo-800">Modifier</button>
-            </div>
-        </div>
+            <a href="">Demandes</a>
+            <a href="">Comment ça marche?</a>
+        </nav>
     </header>
-
-    <main class="max-w-6xl mx-auto px-4 py-6 space-y-4">
-
-        <!-- ===== NOM COMPLET (JS : affiché à la première utilisation ou au clic sur Modifier) ===== -->
-        <section id="name-section" class="bg-white rounded-xl border border-slate-200 p-4">
-            <h2 class="font-semibold mb-2">Ton nom complet</h2>
-            <form id="name-form" class="flex flex-col gap-2 sm:flex-row">
-                <input id="name-input" type="text" placeholder="Jean-Marc O’Brien"
-                    class="flex-1 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                <button type="submit"
-                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">Enregistrer</button>
-            </form>
-            <p id="name-error" class="hidden text-red-600 text-sm mt-1">Entre ton prénom et ton nom (lettres, espaces,
-                apostrophes et traits d’union).</p>
-        </section>
-
-        <!-- ===== MESSAGES ===== -->
-        <p id="loader" class="hidden text-center text-indigo-600 font-medium">Chargement…</p>
-        <p id="success-msg" class="hidden bg-green-100 text-green-800 px-4 py-2 rounded-lg">Activité enregistrée</p>
-        <p id="error-msg" class="hidden bg-red-100 text-red-800 px-4 py-2 rounded-lg">Une erreur est survenue. Réessaie
-            dans un instant.</p>
-
-        <!-- ===== DEUX COLONNES : formulaire à gauche, liste à droite (empilés sur mobile) ===== -->
-        <div class="grid gap-6 lg:grid-cols-3 lg:items-start">
-
-            <!-- FORMULAIRE -->
-            <section class="bg-white rounded-xl border border-slate-200 p-4 lg:sticky lg:top-4">
-                <h2 id="form-title" class="font-semibold text-lg mb-3">Ajouter une activité</h2>
-
-                <form id="activity-form" class="space-y-3">
-                    <div>
-                        <label for="title" class="block text-sm font-medium mb-1">Titre</label>
-                        <input id="title" type="text"
-                            class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                        <p id="title-error" class="hidden text-red-600 text-sm mt-1">Le titre doit contenir entre 5 et
-                            100 caractères.</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label for="theme" class="block text-sm font-medium mb-1">Thème</label>
-                            <select id="theme"
-                                class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                                <option value="">Choisir</option>
-                                <option value="jeu">Jeu</option>
-                                <option value="apprentissage">Apprentissage</option>
-                                <option value="exercice">Exercice</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                            <p id="theme-error" class="hidden text-red-600 text-sm mt-1">Choisis un thème.</p>
-                        </div>
-                        <div>
-                            <label for="duration" class="block text-sm font-medium mb-1">Durée (min)</label>
-                            <input id="duration" type="number" placeholder="10 à 20"
-                                class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                            <p id="duration-error" class="hidden text-red-600 text-sm mt-1">Entre un entier de 10 à 20.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="objectives" class="block text-sm font-medium mb-1">
-                            Objectifs <span class="text-slate-400 font-normal">(facultatif)</span>
-                        </label>
-                        <input id="objectives" type="text"
-                            class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                    </div>
-
-                    <div>
-                        <label for="description" class="block text-sm font-medium mb-1">Description</label>
-                        <textarea id="description" rows="4"
-                            class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
-                        <p id="description-error" class="hidden text-red-600 text-sm mt-1">La description doit contenir
-                            entre 20 et 1 000 caractères.</p>
-                    </div>
-
-                    <div class="flex gap-2">
-                        <button type="submit" id="submit-btn"
-                            class="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">Ajouter</button>
-                        <!-- Visible seulement en mode modification -->
-                        <button type="button" id="cancel-btn"
-                            class="hidden bg-slate-200 px-4 py-2 rounded-lg hover:bg-slate-300">Annuler</button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- LISTE -->
-            <section class="lg:col-span-2 space-y-4">
-
-                <!-- Recherche + filtre -->
-                <div class="flex flex-col gap-2 sm:flex-row">
-                    <input id="search" type="search" placeholder="Rechercher par titre"
-                        class="flex-1 border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                    <select id="filter-theme"
-                        class="border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                        <option value="">Tous les thèmes</option>
-                        <option value="jeu">Jeu</option>
-                        <option value="apprentissage">Apprentissage</option>
-                        <option value="exercice">Exercice</option>
-                        <option value="autre">Autre</option>
-                    </select>
-                </div>
-
-                <!-- Liste vide -->
-                <p id="empty-msg" class="hidden text-center text-slate-500 py-8">
-                    Aucune activité trouvée. Ajoute la première avec le formulaire.
+    <main>
+        <section class="bg-[#174F48] rounded-b-lg flex">
+            <div>
+                <p class="text-[#A9D6C6]">Bibliothèque collaborative</p>
+                <h1 class="text-[#FFFFFF]">Les livres circulent.
+                    <br>
+                    <span class="text-[#A9D6C6]">Les idées aussi.</span>
+                </h1>
+                <p class="text-[#A9D6C6]">Découvrez les demandes d’échange de la communauté et donnez une nouvelle <br>vie à vos livres
+                    techniques.
                 </p>
+            </div>
+            <div class="border flex rounded-xl  ">
+                <strong class="text-[#FFFFFF]">3</strong>
+                <p class="text-[#FFFFFF]">demandes <br>
+                    disponibles</p>
+            </div>
+        </section>
+        <section class="flex">
+            <div class="flex bg-[#FFFFFF] ">
+                <label for="" class="border" >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="border" id="inputRecherche">
+                </label>
 
-                <!-- Cartes : le JS remplit ce bloc avec createElement().
-             Les 3 cartes ci-dessous sont des exemples à supprimer ensuite. -->
-                <div id="activities" class="grid gap-4 sm:grid-cols-2">
+            </div>
+            <div  id="conteiner-btn" class="flex bg-[#6F7E7B] border ">
+                <button  data-exchange="tous" class="border">Tous</button>
+                <button  data-exchange="permanent">Permanent</button>
+                <button  data-exchange="temporary" >Temporiaire</button>
+            </div>
+            <div>
+                <button id="btn-Actu">
+                    <i class="fa-solid fa-rotate"></i>
+                    Actualiser
+                </button>
+            </div>
+        </section>
+        <div>
+            <h2>Demandes récentes</h2>
+            <span>3 résultats</span>
+        </div>
+        <section>
+            <article>
+                <div>
+                    <i class="fa-solid fa-user"></i>
+                    <strong>Lina B</strong>
+                    <span>Il y a 2h</span>
+                    <div>Définitif</div>
+                </div>
+                <hr>
+                <div>
+                    <div livre1>
+                        <p class="text-[#687673]">Livre proposé
+                        </p>
+                        <div>
+                            <img src="" alt="">
+                            <div id="livres" >
+                                <!-- <p class="text-[#1F675D]">Bonnes pratiques</p>
+                                <h3>Clean Code </h3>
+                                <p class="text-[#687673]">Robert C. Martin </p>
+                                <p class="text-[#687673]">Un guide incontournable pour écrire du code lisible, simple et maintenable.</p>
+                                <div lktouba>
+                                    <span>Clean code
+                                    </span>
+                                    <span>Architecture</span>
 
-                    <!-- Carte exemple 1 : durée courte (vert) -->
-                    <article class="bg-white rounded-xl border border-slate-200 p-4 flex flex-col gap-2">
-                        <div class="flex items-start justify-between gap-2">
-                            <h3 class="font-semibold">Quiz éclair</h3>
-                            <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md">jeu</span>
-                        </div>
-                        <p class="text-sm text-slate-600">Chaque équipe répond à 5 questions sur le cours du matin.</p>
-                        <p class="text-sm"><span class="font-medium">Objectifs :</span> Réviser les notions clés</p>
-                        <span class="w-fit text-sm px-3 py-1 rounded-full"
-                            style="background-color:#dcfce7;color:#166534">12 min</span>
-                        <p class="text-xs text-slate-500">Par Sara Alami</p>
-                        <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
-                            <button
-                                class="text-sm px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200">Modifier</button>
-                            <button class="text-sm px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200">Durée</button>
-                            <button
-                                class="text-sm px-3 py-1 rounded-lg text-red-600 hover:bg-red-50 ml-auto">Supprimer</button>
-                        </div>
-                    </article>
+                                </div> -->
+                            </div>
+                             <div id="exchangeBook" >
 
-                    <!-- Carte exemple 2 : durée moyenne (jaune) -->
-                    <article class="bg-white rounded-xl border border-slate-200 p-4 flex flex-col gap-2">
-                        <div class="flex items-start justify-between gap-2">
-                            <h3 class="font-semibold">Mime des concepts</h3>
-                            <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md">exercice</span>
+                             </div>
                         </div>
-                        <p class="text-sm text-slate-600">Un apprenant mime un terme technique, le groupe devine.</p>
-                        <span class="w-fit text-sm px-3 py-1 rounded-full"
-                            style="background-color:#fef9c3;color:#854d0e">15 min</span>
-                        <p class="text-xs text-slate-500">Par Youssef Benali</p>
-                        <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
-                            <button
-                                class="text-sm px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200">Modifier</button>
-                            <button class="text-sm px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200">Durée</button>
-                            <button
-                                class="text-sm px-3 py-1 rounded-lg text-red-600 hover:bg-red-50 ml-auto">Supprimer</button>
-                        </div>
-                    </article>
 
-                    <!-- Carte exemple 3 : durée longue (rouge) -->
-                    <article class="bg-white rounded-xl border border-slate-200 p-4 flex flex-col gap-2">
-                        <div class="flex items-start justify-between gap-2">
-                            <h3 class="font-semibold">Mini projet en binôme</h3>
-                            <span
-                                class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md">apprentissage</span>
-                        </div>
-                        <p class="text-sm text-slate-600">Par deux, construire une petite page en utilisant une nouvelle
-                            notion.</p>
-                        <span class="w-fit text-sm px-3 py-1 rounded-full"
-                            style="background-color:#fee2e2;color:#991b1b">20 min</span>
-                        <p class="text-xs text-slate-500">Par Imane El Idrissi</p>
-                        <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
-                            <button
-                                class="text-sm px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200">Modifier</button>
-                            <button class="text-sm px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200">Durée</button>
-                            <button
-                                class="text-sm px-3 py-1 rounded-lg text-red-600 hover:bg-red-50 ml-auto">Supprimer</button>
-                        </div>
-                    </article>
+
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <button>Voir les détails</button>
+                    <div>
+                        <i class="fa-solid fa-arrow-right"></i>
+                        <p wla tarikh l ktab>Échange sans retour
+                        </p>
+                    </div>
 
                 </div>
-            </section>
-        </div>
+            </article>
+        </section>
+        <footer>
+
+            <a href="">
+                <span>
+                    <i class="fa-solid fa-book"></i>
+                </span>
+                Book <span>Swap</span>
+            </a>
+        </footer>
     </main>
-    <script src="main.js" type="module"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.21.1/axios.js"
-        integrity="sha512-qPnrJ5rk/2kGUxG479UCkR577qsI0OW6ZJyIdP32KAoRqs8WhHz3kxOmOPyl+y+oIxnRk8BMtMH0VBdVcKXClw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script type="module" src="script.js"></script>
+
 </body>
 
 </html>

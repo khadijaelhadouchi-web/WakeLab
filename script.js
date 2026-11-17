@@ -36,3 +36,6 @@ function affichage(data) {
     });
 
 }
+function affichageCrete(){
+
+}
